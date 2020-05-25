@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
+	"os"
 	"upper.io/db.v3/postgresql"
 )
 
@@ -19,10 +20,10 @@ func main() {
 	initEnvs()
 
 	settings := postgresql.ConnectionURL{
-		Host:     "db_postgres",
-		Database: "db-uppergin",
-		User:     "admin",
-		Password: "postgres",
+		Host:     os.Getenv("DB_HOST"),
+		Database: os.Getenv("DB_NAME"),
+		User:     os.Getenv("DB_USER"),
+		Password: os.Getenv("DB_PASSWORD"),
 	}
 
 	r := gin.Default()

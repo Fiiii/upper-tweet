@@ -1,4 +1,0 @@
-CREATE IF NOT EXISTS TABLE "books"(
-    id serial PRIMARY KEY,
-    name VARCHAR (100) NOT NULL
-)

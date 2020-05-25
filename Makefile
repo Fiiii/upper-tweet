@@ -6,9 +6,15 @@ ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 DOCKER_COMPOSE = docker-compose
 TESTS_DIR = tests
-DB_CONNECTION = postgres://admin:postgres@db-uppergin:5432
-TEST_DB_CONNECTION = postgres://admin:postgres@db-uppergin:5432/db-uppergin?sslmode=disable
+DB_CONNECTION = postgres://admin:password@db_postgres:5432/tweet-db?sslmode=disable
+TEST_DB_CONNECTION = postgres://admin:postgres@tweet-db:5432/tweet-db-test?sslmode=disable
 RUN_MIGRATION = run --rm migrate -source file://migrations -database
+
+DB = tweet-db
+DB_CONTAINER_HOST = db_postgres
+DB_CONTAINER_PORT = 5432
+DB_CONTAINER_USER = admin
+DB_PASSWORD=password
 
 build: ## Build containters
 	docker-compose -f docker-compose.yml up --build
@@ -27,3 +33,6 @@ migrate-db-up:
 
 migrate-db-down:
 	$(DOCKER_COMPOSE) $(RUN_MIGRATION) $(DB_CONNECTION) down 1
+
+psql:
+	docker exec -it db_postgres psql $(DB_CONNECTION)

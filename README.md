@@ -4,7 +4,7 @@
   <a href="">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRj2GH5OYJicARKz2cV2epalmOOjp93dztz0bGaIaHaWg0szgAb&usqp=CAU" alt="Logo" width="80" height="80">
   </a>
-
+</p>
   <h3 align="center"># upper-tweet</h3>
 
   <p align="center">
@@ -17,11 +17,9 @@
     <a>Report Bug</a>
     ·
     <a>Request Feature</a>
+    <br />
+    ⚠️🚧⚠️
   </p>
-  ⚠️🚧⚠️
-</p>
-
-
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents

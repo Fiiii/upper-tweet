@@ -8,10 +8,9 @@
   <h3 align="center"># upper-tweet</h3>
 
   <p align="center">
-    An awesome README for # upper-tweet
+    An awesome README for upper-tweet
     <br />
     <strong>Explore the docs »</strong></a>
-    <br />
     <br />
     <a>View Demo</a>
     ·
@@ -21,7 +20,7 @@
   </p>
 </p>
 
-
+⚠️🚧⚠️
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents

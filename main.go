@@ -45,10 +45,6 @@ func main() {
 	//	log.Fatalf("Find(): %q\n", err)
 	//}
 
-	//for i, book := range books {
-	//	log.Printf("Book %d: %#v\n", i, book)
-	//}
-
 	r.Run("127.0.0.1:8080")
 }
 

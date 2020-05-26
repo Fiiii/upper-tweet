@@ -18,6 +18,7 @@ type Book struct {
 
 func main() {
 	initEnvs()
+	InitServer().Run(os.Getenv("API_PORT"))
 
 	settings := postgresql.ConnectionURL{
 		Host:     os.Getenv("DB_HOST"),
@@ -25,13 +26,6 @@ func main() {
 		User:     os.Getenv("DB_USER"),
 		Password: os.Getenv("DB_PASSWORD"),
 	}
-
-	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "OK TEST V2",
-		})
-	})
 
 	sees, err := postgresql.Open(settings)
 	if err != nil {
@@ -44,8 +38,20 @@ func main() {
 	//if err != nil {
 	//	log.Fatalf("Find(): %q\n", err)
 	//}
+}
 
-	r.Run("127.0.0.1:8080")
+func InitServer() *gin.Engine {
+	r := gin.Default()
+
+	r.GET("/ping", pingEndpoint)
+
+	return r
+}
+
+func pingEndpoint(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"message": "OK",
+	})
 }
 
 func initEnvs() {

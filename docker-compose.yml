@@ -8,7 +8,7 @@ x-db-envs: &db-envs
 
 services:
   app:
-    container_name: uppergin
+    container_name: upper_tweet
     build:
       context: .
       dockerfile: ./Dockerfile

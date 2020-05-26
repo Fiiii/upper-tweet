@@ -5,9 +5,10 @@ ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 .PHONY: help dependencies up start stop restart status ps clean
 
 DOCKER_COMPOSE = docker-compose
+DOCKER_COMPOSE_TEST_FILE = docker-compose.test.yml
 TESTS_DIR = tests
 DB_CONNECTION = postgres://admin:password@db_postgres:5432/tweet-db?sslmode=disable
-TEST_DB_CONNECTION = postgres://admin:postgres@tweet-db:5432/tweet-db-test?sslmode=disable
+TEST_DB_CONNECTION = postgres://admin:postgres@db_test_postgres:5432/tweet-db-test?sslmode=disable
 RUN_MIGRATION = run --rm migrate -source file://migrations -database
 
 DB = tweet-db
@@ -36,3 +37,6 @@ migrate-db-down:
 
 psql:
 	docker exec -it db_postgres psql $(DB_CONNECTION)
+
+test:
+	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_TEST_FILE) up --build --abort-on-container-exit --remove-orphans

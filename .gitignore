@@ -3,3 +3,4 @@
 /tmp
 .terraform
 database_postgres
+database_test_postgres

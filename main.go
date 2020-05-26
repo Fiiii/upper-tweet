@@ -18,7 +18,7 @@ type Book struct {
 
 func main() {
 	initEnvs()
-	InitServer().Run(os.Getenv("API_PORT"))
+	InitServer().Run(fmt.Sprintf("127.0.0.1:%s", os.Getenv("API_PORT")))
 
 	settings := postgresql.ConnectionURL{
 		Host:     os.Getenv("DB_HOST"),

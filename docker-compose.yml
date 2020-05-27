@@ -1,47 +1,68 @@
 version: '3.7'
 
+x-envs: &common-envs
+  ENVIRONMENT: develop
+  GIN_MODE: debug
+  DB_HOST: db
+  DB_PASSWORD: db-pass
+  DB_USER: db-user
+  DB_NAME: db-name
+  DB_PORT: 5432
+  DB_SSL_MODE: disable
+
+x-e2e-envs: &common-e2e-envs
+  ENVIRONMENT: test
+  GIN_MODE: debug
+  DB_HOST: db
+  DB_PASSWORD: db-pass
+  DB_USER: db-user
+  DB_NAME: db-name
+  DB_PORT: 5432
+  DB_SSL_MODE: disable
+
 x-db-envs: &db-envs
-  POSTGRES_USER: ${DB_USER}
-  POSTGRES_PASSWORD: ${DB_PASSWORD}
-  POSTGRES_DB: ${DB_NAME}
-  DATABASE_HOST: ${DB_HOST}
+  POSTGRES_PASSWORD: db-pass
+  POSTGRES_USER: db-user
+  POSTGRES_DB: db-name
 
 services:
-  app:
-    container_name: upper_tweet
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - '8080:8080'
-    restart: on-failure
-    volumes:
-      - .:/api:delegated
+  db:
+    image: postgres
+    restart: always
     networks:
-      - fiinet
-
-  db-postgres:
-    image: postgres:latest
-    container_name: db_postgres
-    environment:
-      <<: *db-envs
+      - backend
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
-    volumes:
-      - ./database_postgres:/var/lib/postgresql/data
-    networks:
-      - fiinet
+    environment:
+      <<: *db-envs
 
   migrate:
     image: migrate/migrate
     networks:
-      - fiinet
+      - backend
     volumes:
-      - ./migrations:/migrations
+      - ./db/migrations:/migrations
     command: version
     depends_on:
-      - db-postgres
+      - db
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: 'unless-stopped'
+    networks:
+      - backend
+    ports:
+      - 8080:8080
+    environment:
+      <<: *common-envs
+    depends_on:
+      - db
+    volumes:
+      - .:/app:delegated
 
 networks:
-  fiinet:
-    driver: bridge
+  backend:

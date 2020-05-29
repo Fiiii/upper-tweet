@@ -19,3 +19,14 @@ func Test_MainHealth(t *testing.T){
 
 	assert.Equal(t, 200, res.StatusCode)
 }
+
+func TestCodeWars(t *testing.T) {
+	word := "world"
+	var result = ""
+	for _, c := range word {
+		fmt.Println(string(c) + result)
+		result = string(c) + result
+	}
+
+	fmt.Println(result)
+}
